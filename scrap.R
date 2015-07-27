@@ -76,17 +76,22 @@ ucinet.details$col.labels <- col.labels
 row.labels <- character(ucinet.details$dim2)
 for(i in 1:ucinet.details$dim2) {
   l <- readBin(con, what = integer(), n = 1, size = 2) # (length of label 1) * 2
-  row.labels[i] <- readBin(con, what = character(), n = l / 2, size = 2) # (length of label 1) * 2
+  row.labels[i] <- paste(readBin(con, what = character(), n = l / 2, size = 2), collapse='') # (length of label 1) * 2
 }
 ucinet.details$row.labels <- row.labels
 
-
-
-
-
-
-
+## Matrix
+con <- file('./ucinetfiles/campnet-6404.##d', open='rb')
+sz <- file.info('./ucinetfiles/campnet-6404.##d')$size
+(f <- readBin(con, what=integer(), n=sz, size = 4))
 close(con)
+f[f != 0 ] <- 1
+m <- matrix(f, ncol=ucinet.details$dim1, nrow=ucinet.details$dim2)
+colnames(m) <- ucinet.details$col.labels
+rownames(m) <- ucinet.details$row.labels
+
+
+
 closeAllConnections()
 
 
