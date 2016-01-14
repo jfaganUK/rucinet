@@ -1,51 +1,25 @@
-### UCINET Read and Write
-### A set of functions for reading and writing UCINET 6 6404 binary files.
-### Jesse Fagan
-### May 16, 2014
-
-library(data.table)
-
-## Whole file
-sz <- file.info('./ucinetfiles/test-5.##h')$size
-con <- file('./ucinetfiles/test-5.##h', open='rb')
-f <- readBin(con, what=raw(), n=sz)
-close(con)
-data.frame(raws=f,chars=sapply(f, rawToChar))
-
-## Whole file
-con <- file('./ucinetfiles/test.##d', open='rb')
-(f <- readBin(con, what=integer(), n=10000, size = 4))
-close(con)
-f[f != 0 ] <- 1
-m <- matrix(f, nrow=6)
-
-
-
-
-
-
-
-
-
-readBinaryMatrix <- function(fileName) {
+#' This function will read a single binary UCINET 6404 matrix file. Make sure you set UCINET to save files as 6404 file format only, and save a new data file before using this function.
+#'
+#' @param fileName The filename of the UCINET file. Do not include the .##h or .##d
+#' @return A matrix object of the UCINET data.
+readBinary6404 <- function(fileName) {
   con <- file(paste0(fileName, '.##h'), open='rb')
 
-  # store the details
   ucinet.details <- list()
 
-  readBin(con, what=raw(), n=2, size=1) #junk
+  readBin(con, what=raw(), n=2, size=1) #junk data?
   ucinet.details$file.version <- paste(rawToChar(readBin(con, what=raw(), n=4, size=1), multiple = T), collapse='') # version
+
+  if(ucinet.details$file.version != '6404') {
+    stop('The file does not indicate that it is version 6404. Pleae export a version 6404 file.')
+  }
 
   # Date: 2015 (15), month (7), day (26), Sunday (1)
   yy <- readBin(con, what=integer(), n=1,size=2) # year (15)
   mm <- readBin(con, what=integer(), n=1,size=2) # month (7)
   dd <- readBin(con, what=integer(), n=1,size=2) # day (26)
   dow <- readBin(con, what=integer(), n=1,size=2) # day of week (1)
-  ucinet.details$date.mo## A step by step processes
-  fileName <- './ucinetfiles/campnet-6404'
-  closeAllConnections()
-
-  dified <- paste(yy + 2000, '-', mm, '-', dd, sep = '')
+  ucinet.details$date.mo <- paste(yy + 2000, '-', mm, '-', dd, sep = '')
 
   # Label type
   ucinet.details$label.type <- readBin(con, what=integer(), n=1,size=2) # label type = 3
@@ -84,6 +58,7 @@ readBinaryMatrix <- function(fileName) {
     row.labels[i] <- paste(readBin(con, what = character(), n = l / 2, size = 2), collapse='') # (length of label 1) * 2
   }
   ucinet.details$row.labels <- row.labels
+  close(con)
 
   ## Matrix
   con <- file(paste0(fileName, '.##d'), open='rb')
@@ -97,14 +72,3 @@ readBinaryMatrix <- function(fileName) {
 
   return(m)
 }
-
-#fileName <- './ucinetfiles/campnet-6404'
-fn <- './ucinetfiles/steve-6404'
-m <- readBinary6404(fn)
-
-# quick visual
-library(network)
-g <- network(m)
-plot(g)
-
-
