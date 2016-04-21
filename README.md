@@ -1,8 +1,10 @@
-# RUCINET - a package to interaction with UCINET files in R.
+# RUCINET - an R package to interact with UCINET files
 
-This package is intended to help with getting data from UCINET into R and back again.
+This package is intended to ease the movement of data between R and UCINET.
 
-At this current time I have it reading single v6404 binary matrices. More to come in the future. See ths example. You will neeed to install `devtools` in order to install it directly from Github.
+At this current time, it only reliably reads a single v6404 binary matrix from UCINET to R. 
+
+See ths example. You will neeed to install `devtools` in order to install it directly from Github.
 
 ```{r}
 devtools::install_git('https://github.com/jfaganUK/rucinet')
