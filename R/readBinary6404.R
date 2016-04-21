@@ -11,7 +11,7 @@ readBinary6404 <- function(fileName) {
   ucinet.details$file.version <- paste(rawToChar(readBin(con, what=raw(), n=4, size=1), multiple = T), collapse='') # version
 
   if(ucinet.details$file.version != '6404') {
-    stop('The file does not indicate that it is version 6404. Pleae export a version 6404 file.')
+    stop('The file does not indicate that it is version 6404. Pleae export a version 6404 file from UCINET.')
   }
 
   # Date: 2015 (15), month (7), day (26), Sunday (1)
