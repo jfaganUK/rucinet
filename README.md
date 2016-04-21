@@ -6,11 +6,13 @@ At this current time, it only reliably reads a single v6404 binary matrix from U
 
 See ths example. You will neeed to install `devtools` in order to install it directly from Github.
 
+Enter the name of the file without the ##h or the ##d.
+
 ```{r}
 devtools::install_git('https://github.com/jfaganUK/rucinet')
 library(rucinet)
 fn <- './ucinetfiles/steve-6404'
-m <- readBinary6404(fn)
+m <- readUCINET(fn)
 
 # quick visual
 library(network)
