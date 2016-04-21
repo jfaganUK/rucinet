@@ -1,10 +1,10 @@
 Package: rucinet
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Reading and Writing UCINET Data Files
 Version: 0.1
-Date: 2015-07-25
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Date: 2016-04-21
+Author: Jesse Fagan
+Maintainer: Jesse Fagan <jesse.fagan@uky.edu>
+Description: This package will import and export UCINET data files in the v6404 file format. Change your filetype to 6404 in the options, then use the header browser to save your files as 6404.
+License: MIT
 LazyData: TRUE
