@@ -52,18 +52,22 @@ readUCINETHeader <- function(fileName) {
   }
 
   ### Column labels
-  col.labels <- character(ucinet.details$dim1)
-  for(i in 1:ucinet.details$dim1) {
-    l <- readBin(con, what = integer(), n = 1, size = 2) # (length of label 1) * 2
-    col.labels[i] <- paste(readBin(con, what = character(), n = l / 2, size = 2 ), collapse='') # (length of label 1) * 2
+  col.labels <- as.character(1:ucinet.details$dim1)
+  if(hasColumnLabels) {
+    for(i in 1:ucinet.details$dim1) {
+      l <- readBin(con, what = integer(), n = 1, size = 2) # (length of label 1) * 2
+      col.labels[i] <- paste(readBin(con, what = character(), n = l / 2, size = 2 ), collapse='') # (length of label 1) * 2
+    }
   }
   ucinet.details$col.labels <- col.labels
 
   ### Row labels
-  row.labels <- character(ucinet.details$dim2)
-  for(i in 1:ucinet.details$dim2) {
-    l <- readBin(con, what = integer(), n = 1, size = 2) # (length of label 1) * 2
-    row.labels[i] <- paste(readBin(con, what = character(), n = l / 2, size = 2), collapse='') # (length of label 1) * 2
+  row.labels <- as.character(1:ucinet.details$dim2)
+  if(hasRowLabels) {
+    for(i in 1:ucinet.details$dim2) {
+      l <- readBin(con, what = integer(), n = 1, size = 2) # (length of label 1) * 2
+      row.labels[i] <- paste(readBin(con, what = character(), n = l / 2, size = 2), collapse='') # (length of label 1) * 2
+    }
   }
   ucinet.details$row.labels <- row.labels
 
