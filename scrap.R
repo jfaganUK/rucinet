@@ -5,6 +5,7 @@
 
 library(data.table)
 library(dplyr)
+library(rucinet)
 
 ## Whole file
 sz <- file.info('./ucinetfiles/Camp92_6404.##h')$size
@@ -19,6 +20,8 @@ con <- file('./ucinetfiles/campnet2.##d', open='rb')
 close(con)
 f[f != 0 ] <- 1
 m <- matrix(f, nrow=6)
+
+camp92 <- readUCINET('./ucinetfiles/Camp92_6404')
 
 
 
